@@ -34,6 +34,59 @@
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
+            cursor: none; /* Скрываем стандартный курсор */
+        }
+
+        /* --- СТИЛИ ДЛЯ КАСТОМНОГО КУРСОРА --- */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            /* Центрируем элемент относительно его left/top */
+            transform: translate(-50%, -50%); 
+            transition: width 0.1s, height 0.1s;
+        }
+
+        .cursor-dot-outline {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 212, 170, 0.4); 
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            /* Центрируем элемент относительно его left/top */
+            transform: translate(-50%, -50%); 
+            filter: blur(8px);
+            opacity: 0.5;
+            /* Ускоряем transition transform для более отзывчивого следа */
+            transition: transform 0.05s ease-out, opacity 0.3s ease, filter 0.3s ease, width 0.3s ease, height 0.3s ease; 
+        }
+        
+        /* --- ТАНЦУЮЩАЯ ЛЯГУШКА (теперь Hoodwink) --- */
+        .dancing-frog {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 120px; /* Размер может быть изменен в зависимости от новой гифки */
+            height: 120px; /* Размер может быть изменен в зависимости от новой гифки */
+            z-index: 50; 
+            /* НОВАЯ GIF: Hoodwink из Dota 2 */
+            background: url('https://media1.tenor.com/m/d-6JxTn7Xr0AAAAd/hoodwink-dota.gif') no-repeat center center; 
+            background-size: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .dancing-frog:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .bg-animation {
@@ -124,6 +177,7 @@
             font-weight: 500;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
+            cursor: none; 
         }
 
         .nav-links a::after {
@@ -190,7 +244,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            cursor: pointer;
+            cursor: none; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             display: inline-flex;
@@ -317,6 +371,7 @@
             
             display: flex;
             flex-direction: column;
+            cursor: none; 
         }
 
         .pricing-card::before {
@@ -462,7 +517,7 @@
             border-radius: 14px;
             font-size: 18px;
             font-weight: 700;
-            cursor: pointer;
+            cursor: none; 
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border: none;
             background: var(--gradient-1);
@@ -541,6 +596,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            cursor: none; 
         }
         
         .feature-card::before {
@@ -609,6 +665,7 @@
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
+            cursor: none;
         }
 
         .discord-link:hover {
@@ -628,6 +685,10 @@
             }
             .section-title h2 {
                 font-size: 40px;
+            }
+            .dancing-frog {
+                width: 80px;
+                height: 80px;
             }
         }
         
@@ -673,6 +734,12 @@
     </style>
 </head>
 <body>
+    
+    <div class="dancing-frog"></div>
+
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+
     <div class="bg-animation">
         <div class="decorative-lines"></div>
     </div>
@@ -793,7 +860,6 @@
     </footer>
 
     <script>
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (anchor.target !== '_blank') {
@@ -805,7 +871,6 @@
             });
         });
 
-        // Intersection Observer for animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -817,6 +882,41 @@
         document.querySelectorAll('.fade-in').forEach(el => {
             el.style.animationPlayState = 'paused';
             observer.observe(el);
+        });
+
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorDotOutline = document.querySelector('.cursor-dot-outline');
+
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                const x = e.clientX + 'px';
+                const y = e.clientY + 'px';
+                
+                cursorDot.style.left = x;
+                cursorDot.style.top = y;
+                
+                cursorDotOutline.style.left = x;
+                cursorDotOutline.style.top = y;
+            });
+        });
+        
+        document.querySelectorAll('a, button, .btn, .pricing-card, .feature-card').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursorDot.style.width = '12px';
+                cursorDot.style.height = '12px';
+                cursorDotOutline.style.opacity = '0.8';
+                cursorDotOutline.style.filter = 'blur(4px)';
+                cursorDotOutline.style.width = '50px';
+                cursorDotOutline.style.height = '50px';
+            });
+            element.addEventListener('mouseleave', () => {
+                cursorDot.style.width = '8px';
+                cursorDot.style.height = '8px';
+                cursorDotOutline.style.opacity = '0.5';
+                cursorDotOutline.style.filter = 'blur(8px)';
+                cursorDotOutline.style.width = '40px';
+                cursorDotOutline.style.height = '40px';
+            });
         });
     </script>
 </body>

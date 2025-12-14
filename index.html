@@ -12,19 +12,24 @@
             box-sizing: border-box;
         }
 
+        /* --- НОВЫЕ НОВОГОДНИЕ ЦВЕТА --- */
         :root {
             --bg-primary: #04040a; 
             --bg-secondary: #0c0c16;
             --bg-card: #12121e;
             --text-primary: #ffffff;
             --text-secondary: #a0a0b0; 
-            --accent-1: #00d4aa; 
-            --accent-2: #0099ff; 
-            --accent-3: #7c3aed; 
-            --gradient-1: linear-gradient(135deg, #00d4aa 0%, #0099ff 100%);
-            --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00d4aa 100%);
-            --gradient-3: linear-gradient(135deg, #0099ff 0%, #7c3aed 100%);
-            --glow-color: rgba(0, 212, 170, 0.5);
+            
+            /* Ледяной синий и белый */
+            --accent-1: #00bcd4; /* Icy Blue */
+            --accent-2: #ffffff; /* White/Snow */
+            --accent-3: #90a4ae; /* Icy Silver/Grey */
+            
+            /* Градиенты для новогоднего настроения */
+            --gradient-1: linear-gradient(135deg, #00bcd4 0%, #FFFFFF 100%); 
+            --gradient-2: linear-gradient(135deg, #90a4ae 0%, #00bcd4 100%); 
+            --gradient-3: linear-gradient(135deg, #FFFFFF 0%, #00bcd4 100%);
+            --glow-color: rgba(0, 188, 212, 0.6); /* Icy Blue Glow */
         }
 
         body {
@@ -48,7 +53,6 @@
             position: fixed;
             left: 0;
             top: 0;
-            /* Центрируем элемент относительно его left/top */
             transform: translate(-50%, -50%); 
             transition: width 0.1s, height 0.1s;
         }
@@ -56,30 +60,28 @@
         .cursor-dot-outline {
             width: 40px;
             height: 40px;
-            background-color: rgba(0, 212, 170, 0.4); 
+            /* Цвет курсора соответствует новогоднему акценту */
+            background-color: rgba(0, 188, 212, 0.4); 
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
             position: fixed;
             left: 0;
             top: 0;
-            /* Центрируем элемент относительно его left/top */
             transform: translate(-50%, -50%); 
             filter: blur(8px);
             opacity: 0.5;
-            /* Ускоряем transition transform для более отзывчивого следа */
             transition: transform 0.05s ease-out, opacity 0.3s ease, filter 0.3s ease, width 0.3s ease, height 0.3s ease; 
         }
         
-        /* --- ТАНЦУЮЩАЯ ЛЯГУШКА (теперь Hoodwink) --- */
+        /* --- ГИФКА (последний запрос пользователя) --- */
         .dancing-frog {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 120px; /* Размер может быть изменен в зависимости от новой гифки */
-            height: 120px; /* Размер может быть изменен в зависимости от новой гифки */
+            width: 120px; 
+            height: 120px; 
             z-index: 50; 
-            /* НОВАЯ GIF */
             background: url('https://cdn.discordapp.com/attachments/1446814271798382773/1449657395369349222/zxc.gif?ex=693fb228&is=693e60a8&hm=5936d4850aba7252b4c50d69a6349acf812933c8e8100a30df474eabbed1b991&') no-repeat center center; 
             background-size: contain;
             transition: transform 0.3s ease;
@@ -96,33 +98,65 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            /* Фон с ледяными бликами */
             background: 
-                radial-gradient(ellipse at 15% 15%, rgba(0, 212, 170, 0.12) 0%, transparent 40%),
-                radial-gradient(ellipse at 85% 85%, rgba(0, 153, 255, 0.12) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 15% 15%, rgba(0, 188, 212, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 85% 85%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(144, 164, 174, 0.1) 0%, transparent 60%),
                 var(--bg-primary);
             filter: blur(5px);
             animation: backgroundShift 30s infinite alternate ease-in-out;
         }
         
+        /* --- НОВОГОДНИЙ ЭФФЕКТ СНЕГОПАДА --- */
+        .snowfall-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 90; 
+            /* Создаем легкие "снежинки" через повторяющиеся градиенты */
+            background-image: radial-gradient(white 1px, transparent 0),
+                              radial-gradient(white 1px, transparent 0);
+            background-size: 50px 50px;
+            animation: snowfall 100s linear infinite;
+            opacity: 0.5; /* Полупрозрачный для реализма */
+        }
+
+        @keyframes snowfall {
+            0% {
+                /* Движение снега по диагонали */
+                background-position: 0 0, 0 0;
+            }
+            100% {
+                /* Сдвиг на большое расстояние для имитации падения */
+                background-position: 500px 1000px, -500px 500px;
+            }
+        }
+        /* --- КОНЕЦ НОВОГОДНЕГО ЭФФЕКТА --- */
+
+
         .decorative-lines {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.2; 
+            opacity: 0.3; /* Сделал линии более заметными */
+            /* Линии в холодных тонах */
             background: repeating-linear-gradient(
                 -45deg,
-                rgba(0, 212, 170, 0.1),
-                rgba(0, 212, 170, 0.1) 1px,
+                rgba(0, 188, 212, 0.15), /* Icy Blue */
+                rgba(0, 188, 212, 0.15) 1px,
                 transparent 1px,
                 transparent 150px 
             ),
             repeating-linear-gradient(
                 45deg,
-                rgba(0, 153, 255, 0.1),
-                rgba(0, 153, 255, 0.1) 1px,
+                rgba(255, 255, 255, 0.15), /* Snow White */
+                rgba(255, 255, 255, 0.15) 1px,
                 transparent 1px,
                 transparent 150px
             );
@@ -151,8 +185,8 @@
             z-index: 100;
             backdrop-filter: blur(25px); 
             background: rgba(4, 4, 10, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Более заметный бордюр */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -219,7 +253,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 20px var(--glow-color); 
+            text-shadow: 0 0 25px var(--glow-color); /* Усиленный ледяной глоу */
         }
 
         .hero p {
@@ -260,7 +294,7 @@
             background: var(--gradient-1);
             background-size: 300% 300%;
             color: var(--bg-primary);
-            box-shadow: 0 15px 45px rgba(0, 212, 170, 0.4);
+            box-shadow: 0 15px 45px rgba(0, 188, 212, 0.4); /* Icy shadow */
             animation: gradientIdle 4s ease infinite;
         }
 
@@ -284,13 +318,13 @@
 
         .btn-primary:hover {
             transform: translateY(-8px) scale(1.04);
-            box-shadow: 0 30px 70px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 30px 70px rgba(144, 164, 174, 0.5); /* Silver shadow on hover */
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.08); 
             color: var(--text-primary);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Более заметный белый бордюр */
             backdrop-filter: blur(10px);
         }
 
@@ -301,7 +335,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3) 0%, rgba(0, 212, 170, 0.3) 100%);
+            /* Холодный градиент для ховера */
+            background: linear-gradient(135deg, rgba(144, 164, 174, 0.3) 0%, rgba(0, 188, 212, 0.3) 100%); 
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: -1;
@@ -315,7 +350,7 @@
         .btn-secondary:hover {
             border-color: var(--accent-1);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
         }
 
         @keyframes gradientIdle {
@@ -363,11 +398,11 @@
             background: var(--bg-card);
             border-radius: 30px; 
             padding: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Чуть более заметная граница */
             transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             
             display: flex;
             flex-direction: column;
@@ -393,7 +428,8 @@
             left: 50%;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0, 212, 170, 0.1) 0%, transparent 70%);
+            /* Ледяной блик */
+            background: radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, transparent 70%);
             transform: translateX(-50%);
             transition: all 0.5s ease;
             z-index: 0;
@@ -401,8 +437,8 @@
 
         .pricing-card:hover {
             transform: translateY(-15px) scale(1.03);
-            border-color: rgba(0, 212, 170, 0.5);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 188, 212, 0.7);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
         }
 
         .pricing-card:hover::before {
@@ -417,8 +453,9 @@
 
         .pricing-card.featured {
             border-color: var(--accent-1);
-            background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, var(--bg-card) 100%);
-            box-shadow: 0 10px 40px rgba(0, 212, 170, 0.3);
+            /* Легкий ледяной оттенок на карточке */
+            background: linear-gradient(180deg, rgba(0, 188, 212, 0.1) 0%, var(--bg-card) 100%);
+            box-shadow: 0 10px 40px rgba(0, 188, 212, 0.3);
         }
 
         .pricing-card.featured::before {
@@ -436,7 +473,7 @@
             font-size: 14px;
             font-weight: 700;
             color: white;
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 5px 15px rgba(144, 164, 174, 0.5);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -457,7 +494,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 10px rgba(0, 212, 170, 0.2);
+            text-shadow: 0 0 15px rgba(0, 188, 212, 0.3); /* Ледяной глоу цены */
         }
 
         .card-period {
@@ -481,7 +518,7 @@
             align-items: center;
             gap: 15px;
             color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 400;
             transition: color 0.3s ease;
         }
@@ -527,7 +564,7 @@
             z-index: 1;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.4);
             text-align: center; 
             display: block; 
             text-decoration: none; 
@@ -555,12 +592,12 @@
 
         .card-btn:hover {
             transform: scale(1.03) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 153, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5); /* Белый/снежный глоу */
         }
 
         .pricing-card.featured .card-btn {
             background: var(--gradient-2);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 10px 30px rgba(144, 164, 174, 0.4);
         }
 
         .pricing-card.featured .card-btn::before {
@@ -570,7 +607,7 @@
         .features {
             padding: 120px 20px;
             background: var(--bg-secondary);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .features .section-title h2 {
@@ -592,7 +629,7 @@
             background: var(--bg-card);
             padding: 40px;
             border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -616,11 +653,11 @@
         .feature-card:hover {
             transform: translateY(-8px);
             border-color: var(--accent-1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .feature-card:hover::before {
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         .feature-icon {
@@ -633,7 +670,7 @@
             justify-content: center;
             font-size: 30px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0, 212, 170, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 188, 212, 0.4);
         }
 
         .feature-card h3 {
@@ -651,7 +688,7 @@
         footer {
             padding: 80px 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             background: var(--bg-secondary);
         }
 
@@ -736,6 +773,8 @@
 <body>
     
     <div class="dancing-frog"></div>
+    
+    <div class="snowfall-animation"></div>
 
     <div class="cursor-dot-outline"></div>
     <div class="cursor-dot"></div>
@@ -856,7 +895,7 @@
     </section>
 
     <footer>
-        <p>© 2025 vectorial.win. Все права защищены. — <a href="https://discord.gg/Uw7Y3gHuHZ" class="discord-link">Discord Сообщество</a></p>
+        <p>© 2025 vectorial.win. Все права защищены. С Новым Годом! ❄️ — <a href="https://discord.gg/Uw7Y3gHuHZ" class="discord-link">Discord Сообщество</a></p>
     </footer>
 
     <script>

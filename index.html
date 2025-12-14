@@ -79,8 +79,8 @@
             width: 120px; /* Размер может быть изменен в зависимости от новой гифки */
             height: 120px; /* Размер может быть изменен в зависимости от новой гифки */
             z-index: 50; 
-            /* НОВАЯ GIF: Hoodwink из Dota 2 */
-            background: url('https://media1.tenor.com/m/d-6JxTn7Xr0AAAAd/hoodwink-dota.gif') no-repeat center center; 
+            /* НОВАЯ GIF */
+            background: url('https://cdn.discordapp.com/attachments/1446814271798382773/1449657395369349222/zxc.gif?ex=693fb228&is=693e60a8&hm=5936d4850aba7252b4c50d69a6349acf812933c8e8100a30df474eabbed1b991&') no-repeat center center; 
             background-size: contain;
             transition: transform 0.3s ease;
         }
@@ -860,6 +860,7 @@
     </footer>
 
     <script>
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (anchor.target !== '_blank') {
@@ -871,6 +872,7 @@
             });
         });
 
+        // Intersection Observer for animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -884,22 +886,27 @@
             observer.observe(el);
         });
 
+        // --- СКРИПТ: Кастомный курсор и След ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorDotOutline = document.querySelector('.cursor-dot-outline');
 
         document.addEventListener('mousemove', (e) => {
+            // Используем requestAnimationFrame для максимально плавной отрисовки
             requestAnimationFrame(() => {
                 const x = e.clientX + 'px';
                 const y = e.clientY + 'px';
                 
+                // Основной кругляшок (мгновенное следование)
                 cursorDot.style.left = x;
                 cursorDot.style.top = y;
                 
+                // Ореол/След (быстрое, но плавное следование)
                 cursorDotOutline.style.left = x;
                 cursorDotOutline.style.top = y;
             });
         });
         
+        // Эффект наведения на интерактивные элементы
         document.querySelectorAll('a, button, .btn, .pricing-card, .feature-card').forEach(element => {
             element.addEventListener('mouseenter', () => {
                 cursorDot.style.width = '12px';
